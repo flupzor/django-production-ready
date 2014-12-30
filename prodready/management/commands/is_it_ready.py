@@ -11,15 +11,13 @@ class Command(BaseCommand):
             'compliance and prints if any invalid settings are found')
 
     def write_result(self, messages):
-        print (
-        '%(border)s\n'
-        'Production ready: %(status)s\n'
-        '%(border)s') % {'border': '-' * 20,
-                            'status': 'No' if messages else 'Yes'}
+        self.stdout.write('Production ready: {status}\n'.format(
+            status='No' if messages else 'Yes'
+        ))
         if messages:
-            print 'Possible errors:'
+            self.stdout.write("Possible errors:")
             for message in messages:
-                print '    *', message
+                self.stdout.write('    *{0}'.format(message))
 
     def handle(self, *args, **options):
         self.verbosity = int(options.get('verbosity'))
