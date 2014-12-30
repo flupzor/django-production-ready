@@ -22,15 +22,12 @@ class Command(BaseCommand):
                 print '    *', message
 
     def handle(self, *args, **options):
-        messages = Validations().run(options)
+        self.verbosity = int(options.get('verbosity'))
+
+        messages = self.run(options)
         self.write_result(messages)
         if messages:
             exit(1)
-
-
-class Validations(object):
-    '''Runs validations against default django settings
-    and returns helpful messages if any errors are found'''
 
     def has_template(self, name, location=[]):
         try:
@@ -108,7 +105,7 @@ class Validations(object):
 #                            linenos.append(path + "/" + file_name)
 #                            linenos.append(linenos_list)
 #        if linenos:
-#            if self.verbosity >= '2':
+#            if self.verbosity >= 2:
 #                return ["There are print statements  'filename' , [list of linenos of  print statements in the file ] ", linenos]
 #            else:
 #                return ["You have one or more print statements"]
@@ -141,7 +138,7 @@ class Validations(object):
 #                            linenos.append(path + "/" + file_name)
 #                            linenos.append(linenos_list)
 #        if linenos:
-#            if self.verbosity >= '2':
+#            if self.verbosity >= 2:
 #                return ["There are ipdb imports   'filename' , [list of linenos of  ipdb import  statements in the file ] ", linenos]
 #            else:
 #                return ["You have one or more ipdb import  statements"]
@@ -149,7 +146,6 @@ class Validations(object):
 #            return []
 
     def run(self, options={}):
-        self.verbosity = options.get('verbosity', 0)
         messages = []
         for (name, method) in inspect.getmembers(self,
                                                 predicate=inspect.ismethod):
