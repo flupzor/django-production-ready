@@ -147,6 +147,9 @@ class Validations(object):
 #                return ["You have one or more ipdb import  statements"]
 #        else:
 #            return []
+
+    def run(self, options={}):
+        self.verbosity = options.get('verbosity', 0)
         messages = []
         for (name, method) in inspect.getmembers(self,
                                                 predicate=inspect.ismethod):
