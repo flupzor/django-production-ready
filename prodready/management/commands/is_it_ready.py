@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from django.conf import settings
+from django.conf import settings, global_settings
 from django.template.loader import find_template
 from django.template import TemplateDoesNotExist
 
@@ -70,10 +70,10 @@ class Validations(object):
         if not settings.EMAIL_HOST_USER:
             messages.append('Setup E-mail host')
 
-        if settings.SERVER_EMAIL == 'root@localhost':
+        if settings.SERVER_EMAIL == global_settings.SERVER_EMAIL:
             messages.append('Set a valid email for SERVER_EMAIL')
 
-        if settings.DEFAULT_FROM_EMAIL == "webmaster@localhost":
+        if settings.DEFAULT_FROM_EMAIL == global_settings.DEFAULT_FROM_EMAIL:
             messages.append('Set a valid email for DEFAULT_FROM_EMAIL')
 
         return messages
