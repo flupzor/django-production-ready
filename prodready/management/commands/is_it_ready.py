@@ -56,10 +56,10 @@ class Validations(object):
     def check_contacts(self):
         messages = []
         message_template = 'Enter valid email address in %s section'
-        if not settings.ADMINS:
+        if len(settings.ADMINS) == 0:
             messages.append(message_template % 'ADMINS')
 
-        if not settings.MANAGERS:
+        if len(settings.MANAGERS) == 0:
             messages.append(message_template % 'MANAGERS')
 
         return messages
