@@ -17,7 +17,7 @@ class Command(BaseCommand):
         if messages:
             self.stdout.write("Possible errors:")
             for message in messages:
-                self.stdout.write('    *{0}'.format(message))
+                self.stdout.write('    {0}'.format(message))
 
     def handle(self, *args, **options):
         self.verbosity = int(options.get('verbosity'))
