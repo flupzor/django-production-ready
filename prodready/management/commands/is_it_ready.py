@@ -11,10 +11,12 @@ class Command(BaseCommand):
             'compliance and prints if any invalid settings are found')
 
     def write_result(self, messages):
-        self.stdout.write('Production ready: {status}\n'.format(
-            status='No' if messages else 'Yes'
-        ))
-        if messages:
+
+        if len(messages) > 0 or self.verbosity >= 2:
+            self.stdout.write('Production ready: {status}\n'.format(
+                status='No' if messages else 'Yes'
+            ))
+        if len(messages) > 0:
             self.stdout.write("Possible errors:")
             for message in messages:
                 self.stdout.write('    {0}'.format(message))
